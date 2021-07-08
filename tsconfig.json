@@ -4,11 +4,7 @@
     "target": "es2020",
     "module": "commonjs",
     "types": ["node", "mocha"],
-    "baseUrl": ".",
-    "paths": {
-      "*": ["./*"]
-    },
-    "typeRoots": ["./@types", "./node_modules/@types", "./node_modules/allure-mocha/dist"]
+    "typeRoots": ["./@types", "./node_modules/@types"]
   },
-  "include": ["./**/*.ts", "./node_modules/allure-mocha/**/*.d.ts"]
+  "include": ["./**/*.ts"]
 }

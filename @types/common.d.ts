@@ -43,7 +43,7 @@ export type Cat = {
   name: string;
   description: string;
   tags: string;
-  gender: string;
+  gender: 'male' | 'female' | 'unisex';
   likes: number;
   dislikes: number;
   message?: string;

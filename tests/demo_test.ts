@@ -2,6 +2,7 @@ import { assert } from 'chai';
 import CoreApi from '../src/http/CoreApi';
 
 describe('Проверка функционала добавления котов', async () => {
+
   it('Получение кота по id', async () => {
     const name = 'Вики';
 
