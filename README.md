@@ -4,10 +4,20 @@
 - java 1.8+ для построения allure репорта
 - node v14+ и npm соответствующей версии
 
-## Пример запуска
+## Команды запуска
+### Установка зависимостей
 ```text
-npm install     // установка зависимостей
-npm run testALL // запуск всех тестов
-npm run test    // запуск конкретного теста (см. spec в package.json)
-npm run report  // генерация allure репорта
+npm install
+```
+### Запуск всех тестов
+```text
+npm run testALL
+```
+### Запуск конкретного теста (см. spec в package.json)
+```text
+npm run test
+```
+### Генерация allure репорта
+```text
+npm run report
 ```
