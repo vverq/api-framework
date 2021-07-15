@@ -2,7 +2,6 @@ import { assert } from 'chai';
 import CoreApi from '../src/http/CoreApi';
 
 describe('Проверка функционала добавления котов', async () => {
-
   it('Получение кота по id', async () => {
     const name = 'Вики';
 
@@ -28,7 +27,10 @@ describe('Проверка функционала добавления кото�
 
     const response = await CoreApi.removeCat(103826);
 
-    assert.ok(response.status === status, `Актуальный статус код ${response.status}, ожидался ${status}`);
+    assert.ok(
+      response.status === status,
+      `Актуальный статус код ${response.status}, ожидался ${status}`
+    );
   });
 
   it('Проверка данных о коте', async () => {
@@ -45,5 +47,38 @@ describe('Проверка функционала добавления кото�
     const response = await CoreApi.getCatById(101368);
 
     assert.deepEqual(response.data.cat, cat_exp);
+  });
+
+  it('Проверка что все коты из списка женского пола', async () => {
+    const catsIdList = [103775, 101377, 101437];
+    const gender = `female`;
+    const genderList = [];
+
+    // Использование цикла for (последовательное выполнение операций)
+    console.time('for');
+    for (let i = 0; i < catsIdList.length; i++) {
+      const response = await CoreApi.getCatById(catsIdList[i]);
+      genderList.push(response.data.cat.gender);
+    }
+    console.timeEnd('for');
+
+    // // такой перебор не сработает, т.к. это попытка запустить асинхронную функцию
+    // // из синхронного контекста .map
+    // catsIdList.map(async (id) => {
+    //   const response = await CoreApi.getCatById(id);
+    //   genderList.push(response.data.cat.gender);
+    // });
+
+    // Использование Promise.all (параллельное выполнение операций)
+    console.time('Promise.all');
+    const responseArray = await Promise.all(catsIdList.map((id) => CoreApi.getCatById(id)));
+    for (let i = 0; i < catsIdList.length; i++) {
+      const response = responseArray[i];
+      genderList.push(response.data.cat.gender);
+    }
+    console.timeEnd('Promise.all');
+
+    assert.ok(genderList.every((g) => g === gender));
+    assert.equal(genderList.length, catsIdList.length * 2);
   });
 });

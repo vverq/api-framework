@@ -10,7 +10,11 @@ describe('Проверка имени кота', async () => {
 
     const response = await CoreApi.getCatById(id);
     allure.logStep(`выполнен запрос GET /get-by-id c параметром ${id}`);
-    allure.testAttachment('testAttachment', JSON.stringify(response.data, null, 2), 'application/json');
+    allure.testAttachment(
+      'testAttachment',
+      JSON.stringify(response.data, null, 2),
+      'application/json'
+    );
 
     assert.equal(response.data.cat.name, name, 'Имена не соответствуют');
   });
@@ -19,21 +23,27 @@ describe('Проверка имени кота', async () => {
     const name = 'Вики';
     const id = 101368;
 
-    const response = await allure.step(`выполнен запрос GET /get-by-id c параметром ${id}`, async () => {
-      console.info('тест 2 🚀:', 'выполняется запрос GET /get-by-id');
-      const response = await CoreApi.getCatById(id);
-      const data = JSON.stringify(response.data, null, 2);
-      console.info('тест 2 🚀:', 'получен ответ на запрос GET /get-by-id:\n', data);
-      allure.attachment('attachment', JSON.stringify(response.data, null, 2), 'application/json');
-      return response;
-    });
+    const response = await allure.step(
+      `выполнен запрос GET /get-by-id c параметром ${id}`,
+      async () => {
+        console.info('тест 2 🚀:', 'выполняется запрос GET /get-by-id');
+        const response = await CoreApi.getCatById(id);
+        const data = JSON.stringify(response.data, null, 2);
+        console.info('тест 2 🚀:', 'получен ответ на запрос GET /get-by-id:\n', data);
+        allure.attachment('attachment', data, 'application/json');
+        return response;
+      }
+    );
     console.info('тест 2 🚀:', 'получен ответ на запрос GET /get-by-id:\n', response.data);
 
-    await allure.step('выполнена проверка соответствия значения имен кота из запроса с ожидаемым', () => {
-      allure.attachment('expected', response.data.cat.name, 'text/plain');
-      allure.attachment('actual', name, 'text/plain');
-      assert.equal(response.data.cat.name, name, 'Имена не соответствуют');
-    });
+    await allure.step(
+      'выполнена проверка соответствия значения имен кота из запроса с ожидаемым',
+      () => {
+        allure.attachment('expected', response.data.cat.name, 'text/plain');
+        allure.attachment('actual', name, 'text/plain');
+        assert.equal(response.data.cat.name, name, 'Имена не соответствуют');
+      }
+    );
   });
 
   it('allure3', async () => {

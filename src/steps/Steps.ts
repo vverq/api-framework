@@ -15,7 +15,7 @@ export default class Steps {
       const response = await CoreApi.getCatById(id);
       const data = JSON.stringify(response.data, null, 2);
       console.info('тест 2 🚀:', 'получен ответ на запрос GET /get-by-id:\n', data);
-      allure.attachment('attachment', JSON.stringify(response.data, null, 2), 'application/json');
+      allure.attachment('attachment', data, 'application/json');
       console.info('тест 2 🚀:', 'получен ответ на запрос GET /get-by-id:\n', response.data);
       return response;
     });
